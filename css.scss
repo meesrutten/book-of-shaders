@@ -1,0 +1,92 @@
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-size: 1.25rem;
+	line-height: 1.5;
+	word-break: break-word;
+	position: relative;
+}
+
+a[href="#bottom"], a[href="#top"]{
+	position: absolute; 
+	top: 1rem; 
+	right: 1rem;
+}
+a[href="#top"]{
+	top: auto;
+	bottom: 1rem;
+}
+
+canvas {
+	width: 50vw;
+	height: 50vw;
+	background: linear-gradient(270deg, #c2c2c2, #595959, #bebebe, #555555);
+	background-size: 800% 800%;
+	
+	-webkit-animation: AnimationName 30s ease infinite;
+	-moz-animation: AnimationName 30s ease infinite;
+	animation: AnimationName 30s ease infinite;
+	
+	@-webkit-keyframes AnimationName {
+		0%{background-position:0% 50%}
+		50%{background-position:100% 50%}
+		100%{background-position:0% 50%}
+	}
+	@-moz-keyframes AnimationName {
+		0%{background-position:0% 50%}
+		50%{background-position:100% 50%}
+		100%{background-position:0% 50%}
+	}
+	@keyframes AnimationName { 
+		0%{background-position:0% 50%}
+		50%{background-position:100% 50%}
+		100%{background-position:0% 50%}
+	}
+}
+
+main {
+	background: linear-gradient(45deg, rgba(131,58,180,.3) 0%, rgba(253,29,29,.3) 10%, rgba(252,176,69,.3) 20%, rgba(253,29,29,.3) 30%, rgba(131,58,180,.3) 40%, rgba(131,58,180,.3) 50%, rgba(253,29,29,.3) 60%, rgba(252,176,69,.3) 70%, rgba(253,29,29,.3) 80%, rgba(131,58,180,.3) 90%);
+	background-repeat: repeat-y;
+	min-height: 100vh;
+}
+
+.lesson-container {
+	display: flex;
+	&:nth-of-type(even) {
+		flex-flow: row-reverse nowrap;
+	}
+	.text-content {
+		width: 40%;
+	}
+}
+
+.separator {
+	padding: 5%;
+	border-bottom: 1px solid black;
+}
+
+.text-content {
+	padding: 5%;
+	
+	p {
+		margin-top: 1rem;
+	}
+}
+
+h1 {
+	font-size: calc(2rem + 2vw);
+	text-transform: uppercase;
+}
+
+h2 {
+	font-size: 1.5rem;
+}
+
+blockquote {
+	font-style: italic;
+	font-size: .75rem;
+	line-height: unset;
+}
