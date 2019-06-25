@@ -4,6 +4,9 @@ console.clear()
 class CanvasManager {
 	constructor(element){
 		this.canvas = document.querySelector(element);
+		
+		this.canvas.insertAdjacentHTML('afterend', `<small class="canvas-name">${element}</small>`)
+		
 		this.fragmentShaderSource = fragmentShaders[element.replace('#','')]
 	}
 	init(){

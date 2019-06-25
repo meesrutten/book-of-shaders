@@ -21,6 +21,7 @@ a[href="#top"]{
 }
 
 canvas {
+	position: relative;
 	width: 50vw;
 	height: 50vw;
 	background: linear-gradient(270deg, #c2c2c2, #595959, #bebebe, #555555);
@@ -46,7 +47,12 @@ canvas {
 		100%{background-position:0% 50%}
 	}
 }
-
+.canvas-name {
+	position: absolute;
+	font-size: .75rem;
+	color: white;
+	text-shadow: 1px 1px 1px rgba(0, 0,0,.5);
+}
 main {
 	background: linear-gradient(45deg, rgba(131,58,180,.3) 0%, rgba(253,29,29,.3) 10%, rgba(252,176,69,.3) 20%, rgba(253,29,29,.3) 30%, rgba(131,58,180,.3) 40%, rgba(131,58,180,.3) 50%, rgba(253,29,29,.3) 60%, rgba(252,176,69,.3) 70%, rgba(253,29,29,.3) 80%, rgba(131,58,180,.3) 90%);
 	background-repeat: repeat-y;
