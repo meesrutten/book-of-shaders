@@ -16,7 +16,7 @@ The good thing about this is that I did really learn what uniforms are in fragme
 - [Build](#build)
 
 ## How to start
-[https://yarnpkg.com/lang/en/docs/install/](Yarn) \
+[https://yarnpkg.com/lang/en/docs/install/](Yarn)
 
 After cloning the repository, head to the folder and run:
 
@@ -32,6 +32,7 @@ yarn start
 
 This will start a development server at ```localhost:1234```
 
+\
 If this does not work, please install ParcelJS globally:
 
 ```sh
