@@ -3,11 +3,11 @@ console.clear()
 
 class CanvasManager {
 	constructor(element){
-		this.canvas = document.querySelector(element);
-		
+		this.canvas = document.querySelector(element);	
+    this.fragmentShaderSource = fragmentShaders[element.replace('#','')]
+    
+    this.canvas.parentElement.querySelector('.webgl.dynamic').textContent = this.fragmentShaderSource
 		this.canvas.insertAdjacentHTML('afterend', `<small class="canvas-name">${element}</small>`)
-		
-		this.fragmentShaderSource = fragmentShaders[element.replace('#','')]
 	}
 	init(){
 		this.camera = new THREE.Camera();
@@ -59,39 +59,39 @@ class CanvasManager {
 
 const fragmentShaders = {
 	lesson1: `
-		#ifdef GL_ES
-		precision mediump float;
-		#endif
+#ifdef GL_ES
+precision mediump float;
+#endif
 
-		void main() {
-			gl_FragColor = vec4(vec3(0.2,0.4,0.9),1.0);
-		}
+void main() {
+  gl_FragColor = vec4(vec3(0.2,0.4,0.9),1.0);
+}
 `,
 	lesson2:
 	`
-		precision mediump float;
+precision mediump float;
 
-		uniform float u_time;
-		uniform vec2 u_mouse;
+uniform float u_time;
+uniform vec2 u_mouse;
 
-		void main() {
-			gl_FragColor = vec4(abs(sin(u_time)),abs(u_mouse.x*0.001),abs(u_mouse.y*0.001) ,1.0);
-		}
+void main() {
+  gl_FragColor = vec4(abs(sin(u_time)),abs(u_mouse.x*0.001),abs(u_mouse.y*0.001) ,1.0);
+}
 `,
 	lesson3: 
 	`
-	#ifdef GL_ES
-		precision mediump float;
-	#endif
+#ifdef GL_ES
+  precision mediump float;
+#endif
 
-	uniform vec2 u_resolution;
-	uniform vec2 u_mouse;
-	uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+uniform float u_time;
 
-	void main() {
-		vec2 st = gl_FragCoord.xy/u_resolution;
-		gl_FragColor = vec4(abs(cos(u_time * st.x)),abs(sin(u_time * st.y)),abs(sin(u_time * st.y * st.x)),1.0);
-	}
+void main() {
+  vec2 st = gl_FragCoord.xy/u_resolution;
+  gl_FragColor = vec4(abs(cos(u_time * st.x)),abs(sin(u_time * st.y)),abs(sin(u_time * st.y * st.x)),1.0);
+}
 `,
 lesson4:
 	`
@@ -202,23 +202,23 @@ float plot (vec2 st, float pct){
 }
 
 void main() {
-    vec2 st = gl_FragCoord.xy/u_resolution.xy;
-    vec3 color = vec3(0.0);
+  vec2 st = gl_FragCoord.xy/u_resolution.xy;
+  vec3 color = vec3(0.0);
 
-    vec3 pct = vec3(st.y);
+  vec3 pct = vec3(st.y);
 
-    pct.r = smoothstep(0.2,0.0, st.y);
-    pct.g = smoothstep(st.x*0.1,st.x*0.0,st.y*0.1);
-    pct.b = pow(st.y,0.5);
+  pct.r = smoothstep(0.2,0.0, st.y);
+  pct.g = smoothstep(st.x*0.1,st.x*0.0,st.y*0.1);
+  pct.b = pow(st.y,0.5);
 
-    color = mix(colorA, colorB, pct);
+  color = mix(colorA, colorB, pct);
 
-    // Plot transition lines for each channel
-    color = mix(color,vec3(1.0,0.0,0.0),plot(st,pct.r));
-    color = mix(color,vec3(0.0,1.0,0.0),plot(st,pct.g));
-    color = mix(color,vec3(0.0,0.0,1.0),plot(st,pct.b));
+  // Plot transition lines for each channel
+  color = mix(color,vec3(1.0,0.0,0.0),plot(st,pct.r));
+  color = mix(color,vec3(0.0,1.0,0.0),plot(st,pct.g));
+  color = mix(color,vec3(0.0,0.0,1.0),plot(st,pct.b));
 
-    gl_FragColor = vec4(color,1.0);
+  gl_FragColor = vec4(color,1.0);
 }
 `,
 lesson8:

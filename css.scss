@@ -61,11 +61,31 @@ main {
 
 .lesson-container {
 	display: flex;
+	position: relative;
 	&:nth-of-type(even) {
 		flex-flow: row-reverse nowrap;
 	}
 	.text-content {
 		width: 40%;
+	}
+	.code-example {
+		position: absolute;
+		top: 0;
+		width: 50%;
+		max-height: 50vw;
+		overflow: scroll;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 100ms ease-out;
+		pre {
+			margin: 0;
+		}
+	}
+	&:hover {
+		.code-example {
+			opacity: .85;
+			visibility: visible;
+		}
 	}
 }
 

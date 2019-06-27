@@ -1,19 +1,28 @@
 # Book of Shaders
 
+[Patricio Gonzalez Vivo](https://github.com/patriciogonzalezvivo/) and [Jen Lowe](http://jenlowe.net/) created a step-by-step guide to the abstract and complex Fragment Shaders of GLSL ([OpenGL Shading Language](https://en.wikipedia.org/wiki/OpenGL_Shading_Language/)). Patricio and Jen created a book about these shaders that offer the possibility of taking digitally generated images to the next level.
+
+Fragment shaders give you control over the pixels rendered on the screen at a fast speed by utilizing the GPU. This is why they’re used in all sort of cases, from 3D web animation of [Three.js](https://threejs.org/) to the 2D layers of [Pixi.js](https://www.pixijs.com/)
+
+WebGL, available in most browsers, uses GLSL to access the GPU from your browser. Enabling developers like myself to implement this on any website. 
+
+## Table of Contents
+- [About this project](#about-this-project)
+- [How to start](#how-to-start)
+- [How it works](#how-it-works)
+
+## About this project
+
 After spending almost a day of setting up an environment for WebGL which had support for the WebGL uniforms like `u_mouse` which tracks mouse position, `u_time` which tracks passed time and `u_resolution` which is the canvas width and height. \
 I gave up. \
 5 seconds after giving up, I went to the next page of The Book of Shaders and noticed that they had already built environments for me to test my GLSL fragments shader code...
-[https://thebookofshaders.com/04/](https://thebookofshaders.com/04/) \
+[https://thebookofshaders.com/04/](https://thebookofshaders.com/04/) 
 
 Failed attempts at building environments: \
 [https://codepen.io/meesrutten/pen/qzmewR](https://codepen.io/meesrutten/pen/qzmewR) \
 [https://codepen.io/meesrutten/pen/RzVKVN](https://codepen.io/meesrutten/pen/RzVKVN)
 
 The good thing about this is that I did really learn what uniforms are in fragment shaders.
-
-# Table of Contents
-- [How to start](#how-to-start)
-- [Build](#build)
 
 ## How to start
 [https://yarnpkg.com/lang/en/docs/install/](Yarn)
@@ -39,7 +48,7 @@ If this does not work, please install ParcelJS globally:
 yarn global add parcel-bundler
 ```
 
-## Build
+## How it works
 
 In the JS I use: `class CanvasManager`. This class gets all the canvas elements that contain `id="lesson${NUMBER}"`.
 

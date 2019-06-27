@@ -17,6 +17,7 @@
 	<article id="top" class="separator">
 		<h1>Book of Shaders</h1>
 		<p>As a Creative Front-End Developer I wanted to learn more about WebGL. WebGL is generally used for 2D and 3D animation on the web because it enables GPU rendering, which makes it fast. This one-pager will contain all the information that I learn from the <a href="https://thebookofshaders.com/">https://thebookofshaders.com/</a></p>
+		<p>Hover on a block with a canvas to reveal the Fragment Shader code that's used in the example.</p>
 	</article>
 	<article class="separator">
 		<h2>Uniforms</h2>
@@ -24,6 +25,9 @@
 	</article>
 	<article class="lesson-container">
 		<canvas id="lesson1"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
 		<div class="text-content">
 			<h2>Uniforms</h2>
 			<p>Apparently <pre><code class="webgl">vec4</code></pre> which is used to add color to your shader is like the CSS <pre><code class="css">rgba()</code></pre> function. But uses 0-1.0 instead of 0-255 values.</p>
@@ -32,6 +36,9 @@
 	</article>
 	<article class="lesson-container">
 		<canvas id="lesson2"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
 		<div class="text-content">
 			<h2>u_time and u_mouse</h2>
 			<p><pre><code class="webgl">u_time</code></pre> (time in seconds since the shader started), <pre><code class="webgl">u_resolution</code></pre> (billboard size where the shader is being drawn) and u_mouse (mouse position inside the billboard in pixels).
@@ -42,6 +49,9 @@
 	</article>
 	<article class="lesson-container">
 		<canvas id="lesson3"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
 		<div class="text-content">
 			<h2>u_resolution and u_time</h2>
 			<p>This is where I got a headache. The x and y coordinates of the fragment get divided by the resolution which results in the fragment being diagonal which then are multiplied by the a function of passed time in second
@@ -57,6 +67,9 @@ gl_FragColor = vec4(abs(cos(u_time * st.x)),abs(sin(u_time * st.y)),abs(sin(u_ti
 	</article>
 	<article class="lesson-container">
 		<canvas id="lesson4"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
 		<div class="text-content">
 			<h2>Plotting and linear interpolation</h2>
 			<p>We visualize the normalized value of the x coordinate (st.x) in two ways: one with brightness (observe the nice gradient from black to white) and the other by plotting a green line on top (in that case the x value is assigned directly to y). The line visualizes the gradient. Updating	<code>float y</code> changes the line and gradient.</p>
@@ -65,6 +78,9 @@ gl_FragColor = vec4(abs(cos(u_time * st.x)),abs(sin(u_time * st.y)),abs(sin(u_ti
 	</article>
 	<article class="lesson-container">
 		<canvas id="lesson5"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
 		<div class="text-content">
 			<h2>Shaping a gradient</h2>
 			<p>The fragment shader in lesson 5 <pre><code class="webgl">float y = smoothstep(0.2,0.5,st.x) - smoothstep(0.5,0.8,st.x);</code></pre> displays my own solution to the creation of a gradient that's white in the middle and black on the sides. The solution of a pro was given <a href="https://thebookofshaders.com/edit.php#05/cubicpulse.frag">here</a></p>
@@ -91,6 +107,9 @@ vector[3] = vector.a = vector.w = vector.q;</code></pre></p>
 	</article>
 	<article class="lesson-container">
 		<canvas id="lesson6"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
 		<div class="text-content">
 			<h2>Mixing color</h2>
 			<p><blockquote>"In GLSL there is a very useful function, <code class="webgl">mix()</code>, that lets you mix two values in percentages. Can you guess what the percentage range is? Yes, values between 0.0 and 1.0! Which is perfect for you, after those long hours practicing your karate moves with the fence - it is time to use them!" - <a href="https://thebookofshaders.com/edit.php#06/easing.frag">https://thebookofshaders.com/edit.php#06/easing.frag</a></blockquote></p>
@@ -99,6 +118,9 @@ vector[3] = vector.a = vector.w = vector.q;</code></pre></p>
 	</article>	
 	<article class="lesson-container">
 		<canvas id="lesson7"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
 		<div class="text-content">
 			<h2>Mixing color</h2>
 			<p>I feel like this plot displays this lesson clearly. Colors are plotted on the canvas the same way as lines are. The colors all mix together.<p><pre><code class="webgl">pct.r = smoothstep(0.2,0.0, st.y);
@@ -109,6 +131,9 @@ pct.b = pow(st.y,0.5);</code></pre>
 	</article>
 	<article class="lesson-container">
 		<canvas id="lesson8"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
 		<div class="text-content">
 			<h2>Exercise: Color Wheel</h2>
 			<p>To animate the circular rainbow I added the cosinus function of passed time which results in an ease that I can speed up or slow down by multiplying it. <pre><code class="webgl">color = hsb2rgb(vec3((angle/TWO_PI)+cos(u_time) * 0.5,radius,1.0));
@@ -133,6 +158,9 @@ pct.b = pow(st.y,0.5);</code></pre>
 	</article>	
 	<article class="lesson-container">
 		<canvas id="lesson9"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
 		<div class="text-content">
 			<h2>Drawing</h2>
 			<p>Using Math to draw things is hard. This function contains the Math to draw a square. It makes a "step" from the bottom left to top left and bottom right. If we multiply the positions of bottom left with top right it returns the used space of the function.<p><pre><code class="webgl">// bottom-left
@@ -147,6 +175,9 @@ pct *= tr.x * tr.y;</code></pre>
 	</article>
 	<article class="lesson-container">
 		<canvas id="lesson10"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
 		<div class="text-content">
 			<h2>My try at a circle</h2>
 			<p>This circle is pretty much a radial gradient but I removed the gradient part to just end up with a circle. This was pretty much done with magic numbers. You can look at this circle and radial gradients as if you were hovering over a mountain and looking straight down onto it.<p>
@@ -163,6 +194,9 @@ gl_FragColor = vec4( color, 1.0 );</code></pre>
 	</article>
 	<article class="lesson-container">
 		<canvas id="lesson11"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
 		<div class="text-content">
 			<h2>The more appropriate way to create a circle</h2>
 			<p>In Math creating a circle revolves around setting the radius from middle to side and multiplying this to PI*2. A lot of everyday functions like creating a circle are premade by people and shared by websites like Shadertoy.<p>
@@ -171,6 +205,9 @@ gl_FragColor = vec4( color, 1.0 );</code></pre>
 	</article>
 	<article class="lesson-container">
 		<canvas id="lesson12"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
 		<div class="text-content">
 			<h2>Animated gradient</h2>
 			<p>This gradient is created by constantly updating the distance field of the gradient:
@@ -195,6 +232,9 @@ float a = atan(pos.y,pos.x);
 	</article>
 	<article class="lesson-container">
 		<canvas id="lesson13"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
 		<div class="text-content">
 			<h2>Polar shapes</h2>
 			<p>So... This shape is a result of using:
@@ -215,6 +255,9 @@ float a = atan(pos.y,pos.x);
 	</article>
 	<article class="lesson-container">
 		<canvas id="lesson14"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
 		<div class="text-content">
 			<h2>First ever function</h2>
 			<p>
