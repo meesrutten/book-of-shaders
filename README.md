@@ -6,6 +6,8 @@ Fragment shaders give you control over the pixels rendered on the screen at a fa
 
 WebGL, available in most browsers, uses GLSL to access the GPU from your browser. Enabling developers like myself to implement this on any website. 
 
+[Github Pages here](https://meesrutten.github.io/book-of-shaders/)
+
 ## Table of Contents
 - [About this project](#about-this-project)
 - [How to start](#how-to-start)
