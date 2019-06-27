@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Book of shaders</title>
+	<link rel="stylesheet" href="/normalize.0a915d5e.css">
+	<link rel="stylesheet" href="/css.72ce87bc.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/default.min.css">
+<script src="/normalize.0a915d5e.js"></script><script src="/css.72ce87bc.js"></script></head>
+<body>
+	<!-- https://thebookofshaders.com/ -->
+<a href="#bottom">bottom</a>
+<a href="#top">top</a>
+<main>
+	<article id="top" class="separator">
+		<h1>Book of Shaders</h1>
+		<p>As a Creative Front-End Developer I wanted to learn more about WebGL. WebGL is generally used for 2D and 3D animation on the web because it enables GPU rendering, which makes it fast. This one-pager will contain all the information that I learn from the <a href="https://thebookofshaders.com/">https://thebookofshaders.com/</a></p>
+		<p>Hover on a block with a canvas to reveal the Fragment Shader code that's used in the example.</p>
+	</article>
+	<article class="separator">
+		<h2>Uniforms</h2>
+		<p></p>
+	</article>
+	<article class="lesson-container">
+		<canvas id="lesson1"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
+		<div class="text-content">
+			<h2>Uniforms</h2>
+			<p>Apparently <pre><code class="webgl">vec4</code></pre> which is used to add color to your shader is like the CSS <pre><code class="css">rgba()</code></pre> function. But uses 0-1.0 instead of 0-255 values.</p>
+			<a href="https://thebookofshaders.com/05/">https://thebookofshaders.com/05/</a>
+		</div>
+	</article>
+	<article class="lesson-container">
+		<canvas id="lesson2"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
+		<div class="text-content">
+			<h2>u_time and u_mouse</h2>
+			<p><pre><code class="webgl">u_time</code></pre> (time in seconds since the shader started), <pre><code class="webgl">u_resolution</code></pre> (billboard size where the shader is being drawn) and u_mouse (mouse position inside the billboard in pixels).
+				<br>What happens here is that the sinus function of passed time updates the red channel, the X position of your mouse updates the green channel and Y updates the blue channel.
+				<pre><code class="webgl">gl_FragColor = vec4(abs(sin(u_time)),abs(u_mouse.x*0.001),abs(u_mouse.y*0.001) ,1.0);</code></pre>
+			</p>
+		</div>
+	</article>
+	<article class="lesson-container">
+		<canvas id="lesson3"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
+		<div class="text-content">
+			<h2>u_resolution and u_time</h2>
+			<p>This is where I got a headache. The x and y coordinates of the fragment get divided by the resolution which results in the fragment being diagonal which then are multiplied by the a function of passed time in second
+			
+			<pre><code class="webgl">vec2 st = gl_FragCoord.xy/u_resolution;
+gl_FragColor = vec4(abs(cos(u_time * st.x)),abs(sin(u_time * st.y)),abs(sin(u_time * st.y * st.x)),1.0);</code></pre>
+			</p>
+		</div>
+	</article>
+	<article class="separator">
+		<h2>Shaping functions</h2>
+		<p></p>
+	</article>
+	<article class="lesson-container">
+		<canvas id="lesson4"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
+		<div class="text-content">
+			<h2>Plotting and linear interpolation</h2>
+			<p>We visualize the normalized value of the x coordinate (st.x) in two ways: one with brightness (observe the nice gradient from black to white) and the other by plotting a green line on top (in that case the x value is assigned directly to y). The line visualizes the gradient. Updating	<code>float y</code> changes the line and gradient.</p>
+			<a href="https://thebookofshaders.com/05/">https://thebookofshaders.com/05/</a>
+		</div>
+	</article>
+	<article class="lesson-container">
+		<canvas id="lesson5"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
+		<div class="text-content">
+			<h2>Shaping a gradient</h2>
+			<p>The fragment shader in lesson 5 <pre><code class="webgl">float y = smoothstep(0.2,0.5,st.x) - smoothstep(0.5,0.8,st.x);</code></pre> displays my own solution to the creation of a gradient that's white in the middle and black on the sides. The solution of a pro was given <a href="https://thebookofshaders.com/edit.php#05/cubicpulse.frag">here</a></p>
+		</div>
+	</article>
+	<article class="separator">
+		<h2>Visualisation of the easing curve of sin and cos.</h2>
+		<img style="width:100%" src="https://thebookofshaders.com/05/sincos.gif" alt="Sinus and Cosinus animation">
+	</article>
+	<article class="separator">
+		<h2>Colors</h2>
+		<p></p>
+	</article>
+	<article class="separator">
+		<div class="text-content">
+			<h2>Defining color</h2>
+			<p><blockquote>"The values of .x, .y and .z can also be called .r, .g and .b, and .s, .t and .p. (.s, .t and .p are usually used for spatial coordinates of a texture, which we'll see in a later chapter.) You can also access the data in a vector by using the index position, [0], [1] and [2]." - <a href="https://thebookofshaders.com/06/">https://thebookofshaders.com/06/</a></blockquote>
+				<pre><code class="webgl">vec4 vector;
+vector[0] = vector.r = vector.x = vector.s;
+vector[1] = vector.g = vector.y = vector.t;
+vector[2] = vector.b = vector.z = vector.p;
+vector[3] = vector.a = vector.w = vector.q;</code></pre></p>
+		</div>
+	</article>
+	<article class="lesson-container">
+		<canvas id="lesson6"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
+		<div class="text-content">
+			<h2>Mixing color</h2>
+			<p><blockquote>"In GLSL there is a very useful function, <code class="webgl">mix()</code>, that lets you mix two values in percentages. Can you guess what the percentage range is? Yes, values between 0.0 and 1.0! Which is perfect for you, after those long hours practicing your karate moves with the fence - it is time to use them!" - <a href="https://thebookofshaders.com/edit.php#06/easing.frag">https://thebookofshaders.com/edit.php#06/easing.frag</a></blockquote></p>
+			<a href="https://thebookofshaders.com/06/">https://thebookofshaders.com/06/</a>
+		</div>
+	</article>	
+	<article class="lesson-container">
+		<canvas id="lesson7"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
+		<div class="text-content">
+			<h2>Mixing color</h2>
+			<p>I feel like this plot displays this lesson clearly. Colors are plotted on the canvas the same way as lines are. The colors all mix together.</p><p><pre><code class="webgl">pct.r = smoothstep(0.2,0.0, st.y);
+pct.g = smoothstep(st.x*0.1,st.x*0.0,st.y*0.1);
+pct.b = pow(st.y,0.5);</code></pre>
+		<a href="https://thebookofshaders.com/06/">https://thebookofshaders.com/06/</a>
+		</p></div>
+	</article>
+	<article class="lesson-container">
+		<canvas id="lesson8"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
+		<div class="text-content">
+			<h2>Exercise: Color Wheel</h2>
+			<p>To animate the circular rainbow I added the cosinus function of passed time which results in an ease that I can speed up or slow down by multiplying it. <pre><code class="webgl">color = hsb2rgb(vec3((angle/TWO_PI)+cos(u_time) * 0.5,radius,1.0));
+</code></pre></p><p>
+			<a href="https://thebookofshaders.com/06/">https://thebookofshaders.com/06/</a>
+		</p></div>
+	</article>
+	<article class="separator">
+		<div class="text-content">
+			<h2>Qualifiers</h2>
+			<h2>MORE TYPING??!</h2>
+			<p>In WebGL you can give the parameters of a function a type much like in TypeScript.</p>
+				<pre><code class="webgl">int newFunction(in vec4 aVec4,      // read-only
+                out vec3 aVec3,     // write-only
+                inout int aInt);    // read-write</code></pre><p></p>
+			<a href="https://thebookofshaders.com/06/">https://thebookofshaders.com/06/</a>
+		</div>
+	</article>
+	<article class="separator">
+		<h2>Drawing</h2>
+		<p></p>
+	</article>	
+	<article class="lesson-container">
+		<canvas id="lesson9"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
+		<div class="text-content">
+			<h2>Drawing</h2>
+			<p>Using Math to draw things is hard. This function contains the Math to draw a square. It makes a "step" from the bottom left to top left and bottom right. If we multiply the positions of bottom left with top right it returns the used space of the function.</p><p><pre><code class="webgl">// bottom-left
+vec2 bl = step(vec2(0.1),st);
+float pct = bl.x * bl.y;
+
+// top-right
+vec2 tr = step(vec2(0.1),1.0-st);
+pct *= tr.x * tr.y;</code></pre>
+		<a href="https://thebookofshaders.com/07/">https://thebookofshaders.com/07/</a>
+	</p></div>
+	</article>
+	<article class="lesson-container">
+		<canvas id="lesson10"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
+		<div class="text-content">
+			<h2>My try at a circle</h2>
+			<p>This circle is pretty much a radial gradient but I removed the gradient part to just end up with a circle. This was pretty much done with magic numbers. You can look at this circle and radial gradients as if you were hovering over a mountain and looking straight down onto it.</p><p>
+			<pre><code class="webgl">float pct = 0.0;
+
+vec2 tC = vec2(15.5)-st*31.0;
+pct = sqrt(tC.x*tC.x+tC.y*tC.y-15.5);
+
+vec3 color = vec3(pct);
+
+gl_FragColor = vec4( color, 1.0 );</code></pre>
+		<a href="https://thebookofshaders.com/07/">https://thebookofshaders.com/07/</a>
+		</p></div>
+	</article>
+	<article class="lesson-container">
+		<canvas id="lesson11"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
+		<div class="text-content">
+			<h2>The more appropriate way to create a circle</h2>
+			<p>In Math creating a circle revolves around setting the radius from middle to side and multiplying this to PI*2. A lot of everyday functions like creating a circle are premade by people and shared by websites like Shadertoy.</p><p>
+			<a href="https://thebookofshaders.com/07/">https://thebookofshaders.com/07/</a>
+		</p></div>
+	</article>
+	<article class="lesson-container">
+		<canvas id="lesson12"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
+		<div class="text-content">
+			<h2>Animated gradient</h2>
+			<p>This gradient is created by constantly updating the distance field of the gradient:
+				<pre><code class="webgl">d = length( max(abs(st * abs(cos(u_time*0.5)))-.0,0.) );</code></pre>
+				And setting the strength the white and black gradient to different values, they are blurry because of smoothstep.
+				<pre><code class="webgl">gl_FragColor = vec4(vec3( smoothstep(.1,.4,d)* smoothstep(.6,.55,d)) ,1.0);</code></pre>
+			</p><p>
+			<a href="https://thebookofshaders.com/07/">https://thebookofshaders.com/07/</a>
+		</p></div>
+	</article>
+	<article class="separator">
+		<div class="text-content">
+			<h2>Polar shapes</h2>
+				<pre><code class="webgl">vec2 pos = vec2(0.5)-st;
+float r = length(pos)*2.0;
+float a = atan(pos.y,pos.x);
+</code></pre><p></p>
+<p><blockquote>"In the chapter about color we map the cartesian coordinates to polar coordinates by calculating the radius and angles of each pixel with the following formula:" - <a href="https://thebookofshaders.com/07/">https://thebookofshaders.com/07/</a></blockquote>
+</p>
+<p>The displayed function pretty much takes the radius and bends it from a certain degree to another with the mathematical atan function</p>
+		</div>
+	</article>
+	<article class="lesson-container">
+		<canvas id="lesson13"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
+		<div class="text-content">
+			<h2>Polar shapes</h2>
+			<p>So... This shape is a result of using:
+			<pre><code class="webgl">f = smoothstep(-.5,1., cos(a*10.))*0.2+0.5;</code></pre>
+			Which results in a gear like form.
+			<br>
+			Inside of this gear we render a shade like form:
+			<pre><code class="webgl">float q = abs(cos(a*12.)*sin(a*3.))*.8+.2;</code></pre>
+			<br>
+			The color changes happen by taking the absolute value of the cosinus and sinus function of passed time, which are just certain easings.
+			<pre><code class="webgl">color = 1.0 * color+pct * vec3(abs(sin(u_time*0.5)),abs(cos(u_time*0.5)),abs(tan(u_time*0.5)));</code></pre>
+			<br>
+			The whole thing rotates because I added PI * u_time which results in circular rotation.
+			<pre><code class="webgl">float a = atan(pos.y,pos.x) +PI*(u_time*0.25);</code></pre>
+			</p><p>
+		</p></div>
+		<a href="https://thebookofshaders.com/07/">https://thebookofshaders.com/07/</a>
+	</article>
+	<article class="lesson-container">
+		<canvas id="lesson14"></canvas>
+		<div class="code-example">
+			<pre><code class="webgl dynamic"></code></pre>
+		</div>
+		<div class="text-content">
+			<h2>First ever function</h2>
+			<p>
+				This is where I wrote my first ever (working) WebGL function!
+				It works by returning a shape.
+				<pre><code class="webgl">vec3 makeShape(vec2 st, int N){
+	float d = 0.0;
+	// Remap the space to -1. to 1.
+	st = st *2.-1.;
+	// Angle and radius from the current pixel
+	float a = atan(st.x,st.y)+PI;
+	float r = TWO_PI/float(N);
+	d = cos(floor(.5+a/r)*r-a)*length(st);
+	return vec3(1.0-smoothstep(.4,.41,d));
+}</code></pre>
+			Updating the 3 in this line will update the shape, try it out!
+			<pre><code class="webgl">color = makeShape(st, 3);</code></pre>
+			</p><p>
+			<a href="https://thebookofshaders.com/07/">https://thebookofshaders.com/07/</a>
+		</p></div>
+	</article>
+
+	<article class="separator">
+		<div class="text-content">
+			<h2>Conclusion</h2>
+			<p>I can say that I have learned that fragment shaders are pretty much textures calculated by Math. The Math involved really feels like the Math I learned in Highschool, you are pretty much constantly calculating points and connections in a certain area.</p>
+			<p>For now this is where my journey through fragment shader land reaches to a halt. The Book of Shaders contains a lot of information about fragment shaders and apparently I made it through the rough part. After this little project I will be learning more from the Book of Shaders which I will document on my CodePen account: <a href="https://codepen.io/meesrutten">https://codepen.io/meesrutten</a></p>
+		</div>
+	</article>
+</main>
+
+<script id="vertexShader" type="x-shader/x-vertex">
+		void main() {
+				gl_Position = vec4( position, 1.0 );
+		}
+</script>
+
+<footer id="bottom"> </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/105/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+	<script src="/js.00934245.js"></script>
+</body>
+</html>
